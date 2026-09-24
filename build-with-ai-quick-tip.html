@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build with AI — Quick Tip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+<style>
+  :root {
+    --green: #0abf53;
+    --green-dark: #14832b;
+    --green-tint: #f0faf2;
+    --navy: #191918;
+    --ink: #37352f;
+    --muted: #787066;
+    --line: #e9e8e4;
+    --bg: #ffffff;
+    --card: #ffffff;
+    --blue-tint: #eef4ff;
+    --amber-tint: #fff6e8;
+    --note-bg: #fffaf0;
+    --shadow: none;
+    --shadow-hover: none;
+    --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  b, strong { font-weight: 600; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-feature-settings: "cv11", "ss01";
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Top bar */
+  .topbar { background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 10; }
+  .topbar-inner {
+    max-width: 1080px; margin: 0 auto;
+    display: flex; align-items: center; gap: 12px; padding: 12px 28px;
+  }
+  .logo { display: inline-grid; place-items: center; width: 27px; height: 27px; border-radius: 6px;
+    background: var(--green); color: #fff; font-weight: 800; font-size: 15px; }
+  .topbar-title { font-weight: 700; font-size: 15px; }
+  .topbar-title span { color: var(--muted); font-weight: 500; }
+  .topbar-meta { margin-left: auto; color: var(--muted); font-size: 12px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 28px 72px; }
+
+  /* Header + impact */
+  .head-row { display: flex; align-items: flex-end; gap: 30px; flex-wrap: wrap; }
+  .head-left { flex: 1 1 440px; }
+  h1 { font-size: 30px; line-height: 1.14; margin: 12px 0 7px; letter-spacing: -.021em; font-weight: 800; }
+  .sub { color: var(--muted); font-size: 15px; font-weight: 400; margin: 0; max-width: 580px; }
+
+  .kpis { display: flex; gap: 11px; }
+  .kpi {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 11px 15px; box-shadow: var(--shadow); min-width: 104px; text-align: left;
+  }
+  .kpi .n { font-size: 23px; font-weight: 800; color: var(--navy); line-height: 1.12; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .kpi .l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .kpi .n em { color: var(--green-dark); font-style: normal; }
+
+  .section-label {
+    font-size: 12px; text-transform: none; letter-spacing: normal;
+    color: var(--muted); font-weight: 400; margin: 68px 0 18px;
+  }
+
+  /* Process — 3 across */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
+  .step { padding: 18px 18px 20px; display: flex; flex-direction: column; }
+  .step-head { display: flex; align-items: center; gap: 11px; margin-bottom: 6px; }
+  .num { flex: 0 0 auto; color: var(--navy); font-weight: 700; font-size: 16px; }
+  .num::after { content: "."; }
+  .step h2 { font-size: 17px; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+  .step .lead { color: var(--muted); margin: 3px 0 12px; font-size: 14px; line-height: 1.55; }
+  .checks { display: grid; gap: 9px; }
+  .check { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; line-height: 1.5; }
+  .check .dot { flex: 0 0 auto; margin-top: 3px; width: 17px; height: 17px; border-radius: 50%;
+    background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center;
+    line-height: 1; font-size: 10px; font-weight: 700; }
+  .callout { margin-top: 12px; display: flex; gap: 9px; align-items: flex-start;
+    padding: 11px 0 0; font-size: 13px; line-height: 1.55; }
+  .callout .tag { flex: 0 0 auto; font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: none;
+    color: #2563c9; background: #dbe7ff; border-radius: 6px; padding: 3px 8px; line-height: 1.5; }
+  .outcomes { margin-top: 12px; display: grid; gap: 9px; }
+  .outcome { font-size: 13.5px; padding: 10px 12px; border-radius: 8px; background: #f7f6f4;
+    border: 1px solid var(--line); line-height: 1.5; }
+  .outcome b { display: block; }
+  .outcome span { color: var(--muted); }
+
+  /* Two-column band: tools + pitfalls */
+  .band { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); padding: 18px 20px; }
+  .panel h3 { margin: 0 0 12px; font-size: 14px; font-weight: 700; letter-spacing: -.005em; }
+  .tool { display: flex; gap: 12px; align-items: baseline; font-size: 14px; padding: 8px 0; border-top: 1px solid var(--line); line-height: 1.5; }
+  .tool:first-of-type { border-top: none; }
+  .tool .name { flex: 0 0 68px; font-weight: 700; color: var(--navy); }
+  .tool .what { color: var(--muted); }
+  .step .watchouts { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .step .pitfall { padding: 5px 0; font-size: 13.5px; }
+  .pitfall { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; padding: 8px 0; line-height: 1.5; }
+  .pitfall .x { flex: 0 0 auto; width: 14px; margin-top: 0; color: #d81f2a;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.5; font-size: 15px; font-weight: 800; }
+  .pitfall b { color: var(--navy); }
+
+  /* PDLC × tools — overlapping timeline (Gantt) */
+  .pdlc { overflow-x: auto; padding-bottom: 2px; }
+  .pdlc-inner { min-width: 560px; }
+  .pdlc-head { display: grid; grid-template-columns: repeat(5, 1fr); }
+  .pdlc-ph { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: none;
+    letter-spacing: .05em; padding: 0 0 9px 11px; border-bottom: 2px solid var(--line); border-left: 1px solid var(--line); }
+  .pdlc-ph:first-child { border-left: none; padding-left: 1px; }
+  .pdlc-ph em { display: block; font-style: normal; font-size: 12px; color: var(--navy); font-weight: 700; margin-bottom: 1px; letter-spacing: 0; }
+  .pdlc-rows { display: grid; grid-template-columns: repeat(5, 1fr); row-gap: 9px; padding-top: 12px;
+    background: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 5 - 1px),
+      var(--line) calc(100% / 5 - 1px), var(--line) calc(100% / 5)); }
+  .pdlc-band { align-self: center; margin: 0 4px 2px; border: 1px dashed rgba(0,0,0,.22); border-radius: 9px;
+    padding: 7px 13px; text-align: center; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .pdlc-bar { align-self: center; border-radius: 9px; padding: 9px 13px; color: #fff; line-height: 1.2;
+    margin: 0 4px; box-shadow: var(--shadow); min-width: 0; }
+  .pdlc-bar .bt { font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; }
+  .pdlc-bar .br { display: block; font-weight: 500; font-size: 11.5px; opacity: .95; margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pdlc-bar.gemini { background: #7fa4cc; }
+  .pdlc-bar.droid  { background: #5cb488; }
+  .pdlc-bar.devin  { background: #948cc4; }
+  .pdlc-bar.figma  { background: #d3a771; }
+  .pdlc-note { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+  .pdlc-note b { color: var(--navy); }
+
+  /* Examples */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .ex { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px;
+    transition: background .14s ease, border-color .14s ease; }
+  a.ex:hover { background: #f7f6f4; border-color: #d7d7d4; }
+  .ex .chips { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 9px; }
+  .chip { font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px;
+    background: var(--green-tint); color: var(--green-dark); border: 1px solid rgba(10,191,83,.22); }
+  .ex h3 { margin: 0 0 8px; font-size: 14px; flex: 1 1 auto; }
+  .ex .take { color: var(--muted); font-size: 13px; flex: 1 1 auto; line-height: 1.5; }
+  .ex .go { margin-top: 9px; color: var(--green-dark); font-size: 13px; font-weight: 600; text-decoration: none; }
+  .ex .go:hover { text-decoration: underline; }
+  .ex .scoped { display: inline-block; margin-top: 6px; color: var(--green-dark); font-weight: 600; font-size: 12.5px; }
+
+  /* CTA */
+  .cta { margin-top: 14px; background: var(--navy); color: #fff; border-radius: 13px; padding: 18px 20px;
+    display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .cta .txt { flex: 1 1 270px; }
+  .cta h3 { margin: 0 0 3px; font-size: 16px; }
+  .cta p { margin: 0; color: #b9c6d3; font-size: 13px; line-height: 1.55; }
+  .cta .prompt { flex: 1 1 330px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16);
+    border-radius: 10px; padding: 12px 14px; font-family: var(--mono);
+    font-size: 12.5px; color: #eafaf0; line-height: 1.6; }
+
+  /* Data-consolidation flow */
+  .flowcard { padding: 18px 20px; }
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .flow.merge4 { grid-template-columns: repeat(4, 1fr); }
+  .fstep { background: #f7f6f4; border: 1px solid var(--line); border-radius: 10px; padding: 14px 15px; }
+  .fstep .fn { color: var(--navy); font-weight: 700; font-size: 12px; line-height: 1; margin-bottom: 8px; }
+  .fstep .fn::after { content: "."; }
+  .fstep h4 { margin: 0 0 3px; font-size: 13.5px; }
+  .fstep p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+
+  .cta-line { margin-top: 14px; display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap;
+    background: var(--navy); color: #fff; border-radius: 12px; padding: 13px 18px; font-size: 13.5px; }
+  .cta-line b { color: #eafaf0; }
+  .cta-line .p { color: #b9c6d3; }
+
+  .flowcaption { margin: 0 0 12px; font-size: 13px; color: var(--muted); }
+  .flowcaption b { color: var(--navy); }
+
+  /* Prompts + tips */
+  .deepgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+  .pr { position: relative; background: #f7f6f4; border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; margin-bottom: 9px; line-height: 1.55; cursor: pointer; transition: background .14s ease, border-color .14s ease; }
+  .pr:last-child { margin-bottom: 0; }
+  .pr:hover { background: #efeeeb; border-color: #d7d7d4; }
+  .prtag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .03em; text-transform: none;
+    color: var(--green-dark); background: var(--green-tint); border: 1px solid rgba(10,191,83,.22);
+    border-radius: 5px; padding: 2px 7px; margin-bottom: 6px; }
+  .pr .txt { display: block; font-family: var(--mono); font-size: 12px; color: var(--navy); }
+  .pr .copy { position: absolute; top: 9px; right: 10px; font-size: 10px; font-weight: 700; color: var(--muted); }
+  .pr.copied .copy { color: var(--green-dark); }
+  .tiprow { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; padding: 7px 0; line-height: 1.5;
+    border-top: 1px solid var(--line); }
+  .tiprow:first-of-type { border-top: none; }
+  .tiprow .ic { flex: 0 0 auto; margin-top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--navy); }
+  .tiprow b { color: var(--navy); }
+
+  /* Worked example */
+  .wex { margin-top: 14px; }
+  .wex-title { margin: 0; font-size: 15px; }
+  .wex-grid { display: grid; grid-template-columns: 1fr 1fr auto 1.5fr; gap: 18px; align-items: start; margin-top: 8px; }
+  .wex-srcs { display: grid; gap: 10px; }
+  .wex-card { padding: 0; }
+  .wex-out { padding: 0; }
+  .wex-h { font-size: 11px; font-weight: 700; text-transform: none; letter-spacing: .03em; margin-bottom: 7px; }
+  .wex-card.a .wex-h { color: #2f6fbf; }
+  .wex-card.b .wex-h { color: #b8730a; }
+  .wex-out .wex-h { color: var(--green-dark); }
+  .wex-line { font-size: 11px; line-height: 1.45; margin: 2px 0; padding-left: 12px; position: relative; }
+  .wex-line::before { content: "•"; position: absolute; left: 2px; color: #c4ccd6; }
+  .wex-line b { color: var(--muted); font-weight: 600; }
+  .src-pill { display: inline-block; font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
+  .src-pill.a { background: #e3eefb; color: #2f6fbf; }
+  .src-pill.b { background: #fdeccb; color: #b8730a; }
+  .wex-arrow { display: flex; align-items: center; justify-content: center; color: #c4ccd6; font-size: 24px; font-weight: 700; }
+  .wex-key { margin: 12px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+  .wex-key b { color: var(--navy); }
+  .wex-lead { margin: 6px 0 14px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .wex-lead b { color: var(--navy); }
+  .maps { display: grid; grid-template-columns: 1fr 1fr auto 1.5fr; gap: 18px; align-items: start; margin: 4px 0 14px; }
+  .mapfig { margin: 0; display: flex; flex-direction: column; }
+  .mapfig a { display: block; }
+  .mapfig img { width: 100%; height: 116px; object-fit: cover; object-position: top left;
+    border: 1px solid var(--line); border-radius: 8px; display: block; transition: box-shadow .15s; }
+  .mapfig a:hover img { box-shadow: 0 3px 12px rgba(0,17,44,.14); }
+  .mapfig.a img { border-top: 3px solid #4a8fe0; }
+  .mapfig.b img { border-top: 3px solid #e8a13a; }
+  .mapfig.out img { border-top: 3px solid var(--green); }
+  .mapfig figcaption { order: -1; font-size: 11px; color: var(--muted); margin: 0 0 7px; line-height: 1.4; }
+  .mapfig figcaption b { color: var(--navy); }
+  .maps-arrow { display: flex; align-items: center; justify-content: center; align-self: center;
+    color: #c4ccd6; font-size: 22px; font-weight: 700; }
+  .cascade { display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    padding: 2px 0; margin: 0 0 14px; font-size: 13px; }
+  .cascade .lbl { font-weight: 700; color: var(--navy); margin-right: 2px; }
+  .cascade .node { background: var(--green-tint); color: var(--green-dark);
+    border: 1px solid rgba(10,191,83,.22); border-radius: 6px; padding: 3px 9px; font-weight: 600; }
+  .cascade .sep { color: #c4ccd6; font-weight: 700; }
+  .proc { margin: 0 0 14px; }
+  .proc .cascade { margin: 0; }
+  .cascade.branch { margin: 6px 0 0 190px; }
+  .cascade.branch .bm { color: var(--muted); font-size: 15px; font-weight: 700; margin-right: 2px; }
+  .cascade.branch .lbl { color: var(--muted); font-weight: 600; }
+  .cascade.branch .node { background: transparent; color: var(--ink); border: none; border-radius: 0; padding: 0; font-weight: 500; }
+  .cascade.branch .sep { color: #c4ccd6; font-weight: 500; }
+  .convfig { margin: 0 0 12px; }
+  .convfig a { display: block; }
+  .convfig img { width: 100%; max-height: 340px; object-fit: cover; object-position: top;
+    border: 1px solid var(--line); border-radius: 8px; display: block; transition: box-shadow .15s; }
+  .convfig a:hover img { box-shadow: 0 3px 12px rgba(0,17,44,.14); }
+  .convfig figcaption { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  /* Zoom-in sub-hierarchy labels */
+  .zstep { margin-top: 26px; }
+  .zstep:first-child { margin-top: 0; }
+  .zlabel { display: flex; align-items: center; gap: 10px; margin: 0 0 5px; }
+  .zlabel .zn { flex: 0 0 auto; color: var(--navy); font-size: 13px; font-weight: 700; }
+  .zlabel .zn::after { content: "."; }
+  .zlabel .zt { font-size: 13px; letter-spacing: -.005em; color: var(--navy); font-weight: 700; }
+  .zresult { margin: 12px 0 0; font-size: 13.5px; color: var(--navy); font-weight: 700; }
+  .fstep .spine { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--line); }
+  .fstep .spine .slbl { display: block; font-size: 10px; text-transform: none; letter-spacing: .06em;
+    color: var(--muted); font-weight: 700; margin-bottom: 3px; }
+  .fstep .spine .chain { display: block; font-size: 11.5px; font-weight: 600; color: var(--green-dark); line-height: 1.5; }
+
+  /* Stacked accordions */
+  .accordion { display: grid; gap: 12px; margin-top: 56px; }
+  details.acc { border: 1px solid var(--line); border-radius: 10px; background: #fff; overflow: hidden; }
+  details.acc > summary { list-style: none; cursor: pointer; padding: 15px 18px; display: flex; align-items: center; gap: 11px;
+    font-weight: 700; color: var(--navy); font-size: 15px; }
+  details.acc > summary::-webkit-details-marker { display: none; }
+  details.acc > summary::before { content: "\203A"; font-size: 20px; color: var(--navy); transition: transform .18s ease; line-height: 1; }
+  details.acc[open] > summary::before { transform: rotate(90deg); }
+  details.acc > summary .badge { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--muted);
+    background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
+  details.acc > summary:hover { background: #f1f0ed; }
+  details.acc .acc-body { padding: 4px 18px 18px; border-top: 1px solid var(--line); }
+  details.acc .acc-body > .card { border: none; box-shadow: none; padding: 0; margin: 14px 0 0; }
+  details.acc .acc-body > .deepgrid { margin-top: 14px; }
+
+  footer { margin-top: 20px; color: var(--muted); font-size: 12px; text-align: center; line-height: 1.6; }
+
+  /* Image lightbox */
+  .zoomable { cursor: zoom-in; }
+  .lightbox { position: fixed; inset: 0; z-index: 1000; display: none; align-items: center; justify-content: center;
+    background: rgba(0,17,44,.85); padding: 40px; cursor: zoom-out; }
+  .lightbox.open { display: flex; animation: lb-fade .16s ease; }
+  @keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+  .lightbox img { position: relative; z-index: 1; max-width: 95vw; max-height: 92vh; object-fit: contain; border-radius: 8px;
+    box-shadow: 0 16px 60px rgba(0,0,0,.55); cursor: default; }
+  .lightbox-close { position: fixed; top: 18px; right: 22px; z-index: 2; width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.45); color: #fff; font-size: 24px; line-height: 1; cursor: pointer;
+    display: grid; place-items: center; transition: background .14s ease; }
+  .lightbox-close:hover { background: rgba(0,0,0,.7); }
+
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: 1fr; }
+    .band { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .flow, .flow.merge4 { grid-template-columns: repeat(2, 1fr); }
+    .deepgrid { grid-template-columns: 1fr; }
+    .wex-grid { grid-template-columns: 1fr; }
+    .wex-arrow { transform: rotate(90deg); }
+    .maps { grid-template-columns: 1fr 1fr; }
+    .maps-arrow { display: none; }
+    .mapfig.out { grid-column: 1 / -1; }
+    .mapfig.out img { height: 150px; }
+  }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; }
+    .flow, .flow.merge4 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span class="logo">a</span>
+      <div class="topbar-title">Build with AI <span>· Quick Tip</span></div>
+      <div class="topbar-meta">Eva Han · Product Experience · Sep 2026</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="head-row">
+      <div class="head-left">
+        <h1>A system that scales across your work</h1>
+        <p class="sub">Get the data right, verify early, then systemize it per outcome.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="n"><em>days → hrs</em></div><div class="l">Typical turnaround</div></div>
+        <div class="kpi"><div class="n">5</div><div class="l">Use-case types</div></div>
+        <div class="kpi"><div class="n">3</div><div class="l">Steps to reuse</div></div>
+      </div>
+    </div>
+
+    <div class="section-label">The process</div>
+    <div class="steps">
+
+      <article class="card step">
+        <div class="step-head"><div class="num">1</div><h2>Feed the right data</h2></div>
+        <p class="lead">Input decides everything downstream.</p>
+        <div class="checks">
+          <div class="check"><span class="dot">✓</span> Build the table from the right source</div>
+          <div class="check"><span class="dot">✓</span> Clean up sheet, tab &amp; column labels</div>
+          <div class="check"><span class="dot">✓</span> Label clearly before generating</div>
+        </div>
+        <div class="callout"><span class="tag">ELI10</span>
+          <div>Ask AI to explain it like you're 10. If it can't be simple, the output — or the data — isn't right yet.</div>
+        </div>
+      </article>
+
+      <article class="card step">
+        <div class="step-head"><div class="num">2</div><h2>Verify early passes</h2></div>
+        <p class="lead">Don't trust output blindly.</p>
+        <div class="checks">
+          <div class="check"><span class="dot">✓</span> Sanity-check numbers and %</div>
+          <div class="check"><span class="dot">✓</span> Flag vague descriptions</div>
+        </div>
+        <div class="watchouts">
+          <div class="pitfall"><span class="x">!</span><div><b>Hallucinated numbers.</b> Always sanity-check figures and %.</div></div>
+          <div class="pitfall"><span class="x">!</span><div><b>Garbage in, garbage out.</b> Vague labels → vague output.</div></div>
+          <div class="pitfall"><span class="x">!</span><div><b>Polished but wrong.</b> Looks right ≠ is right.</div></div>
+        </div>
+      </article>
+
+      <article class="card step">
+        <div class="step-head"><div class="num">3</div><h2>Systemize per outcome</h2></div>
+        <p class="lead">Different deliverables, different path.</p>
+        <div class="outcomes">
+          <div class="outcome"><b>Design prototype</b><span>Journey → frames → detail. IA first.</span></div>
+          <div class="outcome"><b>Journey map</b><span>Structured, labeled dataset first.</span></div>
+          <div class="outcome"><b>Data to doc</b><span>Data source first, then storyline.</span></div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="section-label">Which tool, and when &nbsp;·&nbsp; across the PDLC</div>
+    <div class="band" style="grid-template-columns: 1fr;">
+      <div class="panel">
+        <h3>Which tool, and when</h3>
+        <div class="pdlc">
+          <div class="pdlc-inner">
+            <div class="pdlc-head">
+              <div class="pdlc-ph"><em>01</em> Discover</div>
+              <div class="pdlc-ph"><em>02</em> Define</div>
+              <div class="pdlc-ph"><em>03</em> Build</div>
+              <div class="pdlc-ph"><em>04</em> Validate</div>
+              <div class="pdlc-ph"><em>05</em> Ship</div>
+            </div>
+            <div class="pdlc-rows">
+              <div class="pdlc-band" style="grid-column: 1 / 6; grid-row: 1;">Design — across every phase</div>
+              <div class="pdlc-bar gemini" style="grid-column: 1 / 3; grid-row: 2;"><span class="bt">Gemini</span><span class="br">Clean data · shape IA</span></div>
+              <div class="pdlc-bar droid" style="grid-column: 1 / 6; grid-row: 3;"><span class="bt">Droid</span><span class="br">Research · enrich · consolidate · cheap to iterate</span></div>
+              <div class="pdlc-bar devin" style="grid-column: 3 / 6; grid-row: 4;"><span class="bt">Devin</span><span class="br">Build the working prototype · ship it</span></div>
+              <div class="pdlc-bar figma" style="grid-column: 1 / 3; grid-row: 5; width: 75%;"><span class="bt">Figma</span><span class="br">Journey &amp; flow analysis</span></div>
+              <div class="pdlc-bar figma" style="grid-column: 4 / 6; grid-row: 5;"><span class="bt">Figma</span><span class="br">Collaborate · granular per-component polish</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Use-case types &nbsp;·&nbsp; examples in the wild</div>
+    <div class="cards">
+      <div class="ex">
+        <div class="chips"><span class="chip">Droid</span><span class="chip">Devin</span><span class="chip">Figma</span></div>
+        <h3>Complex user flow</h3>
+        <a class="scoped" href="#prd-zoom">How it was scoped ↓</a>
+        <a class="go" href="https://evahan-hub.github.io/DeviceNorthStar/app/" target="_blank" rel="noopener">Open →</a>
+      </div>
+      <div class="ex">
+        <div class="chips"><span class="chip">Devin</span><span class="chip">Gemini</span></div>
+        <h3>Data consolidation → journey map</h3>
+        <a class="scoped" href="#merge-zoom">How it was merged ↓</a>
+        <a class="go" href="https://evahan-hub.github.io/DevicesDesign/app/ipp-journey.dc.html" target="_blank" rel="noopener">Open →</a>
+      </div>
+      <a class="ex" href="https://evahan-hub.github.io/DevicesDesign/app/" target="_blank" rel="noopener">
+        <div class="chips"><span class="chip">Devin</span><span class="chip">Figma</span></div>
+        <h3>Day-to-day delivery</h3>
+        <div class="go">Open →</div>
+      </a>
+      <a class="ex" href="https://docs.google.com/document/d/1EZ1cJVAIYj51ZrOUXVzIv1yt9-4nlHXjyUd7BIbKDA4/edit?tab=t.duuic53yebk4#heading=h.gl9wal7u1d8u" target="_blank" rel="noopener">
+        <div class="chips"><span class="chip">Droid</span><span class="chip">Gemini</span></div>
+        <h3>Big data analysis</h3>
+        <div class="go">Open →</div>
+      </a>
+      <a class="ex" href="DeviceNorthStar.html" target="_blank" rel="noopener">
+        <div class="chips"><span class="chip">Droid</span></div>
+        <h3>HTML website / presentation</h3>
+        <div class="go">Open →</div>
+      </a>
+    </div>
+
+    <div class="accordion">
+    <details class="acc" id="merge-zoom" open>
+    <summary>Zoom in 1 — Merge data for one journey</summary>
+    <div class="acc-body">
+    <div class="card flowcard">
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">1</span><span class="zt">Problem to solve</span></div>
+        <p class="wex-lead">Two mega maps described the same reality with different legends: a <b>JTBD canvas</b> (jobs) and a <b>merchant journey / service blueprint</b> (phases + actors), under different phases with no shared key. <b>The challenge — merge inconsistent data into one consistent taxonomy.</b></p>
+      </div>
+
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">2</span><span class="zt">Result</span></div>
+        <p class="wex-lead"><b>9 jobs × 43 sub-steps → one 46-row Converged Journey.</b> A single dataset that carries both lenses, with every field traceable to its source.</p>
+      </div>
+
+      <div class="zstep">
+        <div class="maps">
+          <figure class="mapfig a"><a href="assets/jtbd-canvas.png" target="_blank" rel="noopener"><img src="assets/jtbd-canvas.png" alt="JTBD canvas — jobs perspective"></a><figcaption><b>A · JTBD canvas</b> — jobs (Big → Little → Micro → pains)</figcaption></figure>
+          <figure class="mapfig b"><a href="assets/merchant-journey.png" target="_blank" rel="noopener"><img src="assets/merchant-journey.png" alt="Merchant journey service blueprint"></a><figcaption><b>B · Merchant journey</b> — service blueprint (phases + actors)</figcaption></figure>
+          <div class="maps-arrow">→</div>
+          <figure class="mapfig out"><a href="assets/converged-canvas.png" target="_blank" rel="noopener"><img src="assets/converged-canvas.png" alt="Converged journey canvas"></a><figcaption><b>Converged Journey</b> — both lenses, one canvas</figcaption></figure>
+        </div>
+
+
+      <div class="wex-grid">
+        <div class="wex-card a">
+          <div class="wex-line"><b>JTBD step</b> · 1. Plan</div>
+          <div class="wex-line"><b>Big Job</b> · Plan how to accept payments in new markets</div>
+          <div class="wex-line"><b>Pain point</b> · Account structure forces manual overhead</div>
+        </div>
+        <div class="wex-card b">
+          <div class="wex-line"><b>Phase</b> · 1. Exploration</div>
+          <div class="wex-line"><b>Sub-step</b> · 1.b Account Setup &amp; Decision</div>
+          <div class="wex-line"><b>Primary user</b> · Merchant</div>
+          <div class="wex-line"><b>Opportunity</b> · O1. Flexible config scoping</div>
+        </div>
+        <div class="wex-arrow">→</div>
+        <div class="wex-out">
+          <div class="wex-line"><b>JTBD step</b> · 1. Plan <span class="src-pill a">A</span></div>
+          <div class="wex-line"><b>Big Job</b> · Plan how to accept payments <span class="src-pill a">A</span></div>
+          <div class="wex-line"><b>Sub-step</b> · 1.b Account Setup &amp; Decision <span class="src-pill b">B</span></div>
+          <div class="wex-line"><b>Primary user</b> · Merchant <span class="src-pill b">B</span></div>
+          <div class="wex-line"><b>Opportunity</b> · O1. Flexible config scoping <span class="src-pill b">B</span></div>
+          <div class="wex-line"><b>Pain / Evidence</b> · Account structure forces manual overhead <span class="src-pill a">A</span><span class="src-pill b">B</span></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">3</span><span class="zt">Step by step + the decision</span></div>
+        <div class="flow merge4">
+          <div class="fstep"><div class="fn">1</div><h4>Match on meaning</h4><p>Map one taxonomy onto another (Phase ↔ JTBD step) — not by label.</p></div>
+          <div class="fstep"><div class="fn">2</div><h4>Pick a spine</h4><p>Choose the top dimension; everything nests under it.</p>
+            <div class="spine"><span class="slbl">My decision — Phase as the spine</span><span class="chain"><b>Phase</b> → Big job → Little job → Pain points → Sub-steps + Evidence</span></div>
+          </div>
+          <div class="fstep"><div class="fn">3</div><h4>Cascade</h4><p>Nest jobs, pains and evidence beneath the spine.</p></div>
+          <div class="fstep"><div class="fn">4</div><h4>Keep provenance</h4><p>Tag every field A / B; flag what doesn't map.</p></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </details>
+
+    <details class="acc" id="prd-zoom">
+    <summary>Zoom in 2 — From a one-pager doc to a full journey prototype</summary>
+    <div class="acc-body">
+    <div class="card flowcard wex">
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">1</span><span class="zt">Problem to solve</span></div>
+        <p class="wex-lead">The device experience in the Customer Area was <b>10+ disconnected table menus</b> — no shared model, everything edited one device at a time. And a vision doc — still abstract about how it actually helps users — doesn't turn itself into a buildable flow.</p>
+      </div>
+
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">2</span><span class="zt">Result</span></div>
+        <p class="wex-lead"><b>10+ menus → three Customer-Area products, as one clickable North Star prototype.</b> Device Intelligence (fleet dashboard + NL search), Devices &amp; Locations (stores/devices, reassign, order) and Device Studio (config wizard + live preview).</p>
+        <div class="proc">
+          <div class="cascade">
+            <span class="lbl">The process:</span>
+            <span class="node">Vision doc</span><span class="sep">→</span>
+            <span class="node">Scoped PRD brief</span><span class="sep">→</span>
+            <span class="node">3 products (from 10+ menus)</span><span class="sep">→</span>
+            <span class="node">Clickable prototype</span>
+          </div>
+          <div class="cascade branch">
+            <span class="bm">↳</span>
+            <span class="lbl">Converged flow:</span>
+            <span class="node">JTBD journey</span><span class="sep">→</span>
+            <span class="node">Component framework</span><span class="sep">→</span>
+            <span class="node">Details per component</span><span class="sep">→</span>
+            <span class="node">Connect each journey</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="zstep">
+        <div class="zlabel"><span class="zn">3</span><span class="zt">The decisions</span></div>
+        <p class="wex-lead" style="margin-bottom:10px;">A few decisions did the heavy lifting — lock these and the model structures around them instead of inventing the product:</p>
+        <div class="flow pieces">
+          <div class="fstep"><h4>Shape the products from JTBD</h4><p>An intuitive call, grounded in the JTBD and how the area is used today — which became the three products, each with a one-line "what it solves."</p></div>
+          <div class="fstep"><h4>Focus on the current journey</h4><p>Stay on the journey merchants have today and improve it from user insights — rather than trying to cover everything at once.</p></div>
+          <div class="fstep"><h4>Describe the behaviour concretely</h4><p>Spell out how each part actually behaves — natural-language search, all-stores / all-devices views, reassign, a control panel with a live simulator.</p></div>
+          <div class="fstep"><h4>Layer in realistic data over time</h4><p>It needn't be precise at first, but realistic figures and stats — 143 settings across 26 groups, 656k active vs 419k trading — make it land for the viewer.</p></div>
+          <div class="fstep"><h4>Feed it good examples</h4><p>Point at benchmarks and existing UIs — DCC report, Looker, Square / Stripe — so solutions anchor to patterns people already know.</p></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </details>
+    </div>
+
+    <div class="section-label">Prompts &nbsp;·&nbsp; hard-won lessons</div>
+    <div class="deepgrid">
+      <div class="panel">
+        <h3>What I learned the hard way</h3>
+        <div class="tiprow"><span class="ic"></span><div><b>It invents numbers with total confidence.</b> I caught a "900" that never existed — now I make it cite a source or say "I don't know."</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It quietly skips sources.</b> I had to ask "did you actually use the NPS file? the Slack Q&A?" — always check coverage.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It can't always read what it claims.</b> Inline files weren't really parsed, just approximated — confirm it used your real source.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It guesses the merge when tables don't match.</b> Different taxonomies → it invents a mapping. Lock the approach before it builds.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It jumps to screens too early.</b> Ask for a PRD and it starts drawing pages — settle the JTBD journey and component framework first, or the flow won't connect.</div></div>
+      </div>
+      <div class="panel">
+        <h3>Prompts that do the work &nbsp;<span style="font-weight:400;color:var(--muted);font-size:12px;">(click to copy)</span></h3>
+        <div class="pr" data-copy="Create a same-format table from each of these sources [Figma board / research tab / export / dashboard]. Add a first column marking which source every row came from, and cross-check each row against the original as the source of truth.">
+          <span class="prtag">1 · Extract &amp; tag source</span><span class="copy">Copy</span>
+          <span class="txt">"Make a same-format table from each source, tag every row with its source, and cross-check it against the original."</span>
+        </div>
+        <div class="pr" data-copy="Before I trust this: verify the numbers and flag anything you can't source — never invent a figure. Then explain the top findings like I'm 10, and keep one verbatim quote per point as evidence.">
+          <span class="prtag">2 · Verify &amp; simplify</span><span class="copy">Copy</span>
+          <span class="txt">"Verify the numbers (flag anything unsourced — don't invent), explain the top findings like I'm 10, and keep one verbatim quote per point."</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.pr').forEach((el) => {
+      el.addEventListener('click', async () => {
+        const text = el.getAttribute('data-copy');
+        try { await navigator.clipboard.writeText(text); } catch (_) {}
+        const label = el.querySelector('.copy');
+        const prev = label.textContent;
+        el.classList.add('copied'); label.textContent = 'Copied ✓';
+        setTimeout(() => { el.classList.remove('copied'); label.textContent = prev; }, 1400);
+      });
+    });
+
+    function openHashTarget() {
+      const h = location.hash;
+      if (!h) return;
+      const el = document.querySelector(h);
+      if (el && el.tagName === 'DETAILS') {
+        el.open = true;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+    window.addEventListener('hashchange', openHashTarget);
+    openHashTarget();
+
+    // Image lightbox — click any figure image to open a full-page, closable modal
+    (function () {
+      const lb = document.getElementById('lightbox');
+      const lbImg = lb.querySelector('img');
+      const closeBtn = lb.querySelector('.lightbox-close');
+      const openLb = (src, alt) => {
+        lbImg.src = src; lbImg.alt = alt || '';
+        lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+      const closeLb = () => {
+        lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true');
+        lbImg.removeAttribute('src'); document.body.style.overflow = '';
+      };
+      document.querySelectorAll('figure a').forEach((a) => {
+        const img = a.querySelector('img');
+        if (!img) return;
+        a.classList.add('zoomable');
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          openLb(a.getAttribute('href') || img.src, img.alt);
+        });
+      });
+      lb.addEventListener('click', (e) => { if (e.target !== lbImg) closeLb(); });
+      closeBtn.addEventListener('click', closeLb);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+    })();
+  </script>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Close">&times;</button>
+    <img src="" alt="">
+  </div>
+</body>
+</html>
