@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Build with AI — Quick Tip</title>
+<title>Build with AI: Quick Tip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
@@ -74,7 +74,7 @@
     color: var(--muted); font-weight: 400; margin: 68px 0 18px;
   }
 
-  /* Process — 3 across */
+  /* Process: 3 across */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow); }
   .step { padding: 18px 18px 20px; display: flex; flex-direction: column; }
@@ -114,28 +114,30 @@
     line-height: 1.5; font-size: 15px; font-weight: 800; }
   .pitfall b { color: var(--navy); }
 
-  /* PDLC × tools — overlapping timeline (Gantt) */
+  /* PDLC × tools: overlapping timeline (Gantt) */
   .pdlc { overflow-x: auto; padding-bottom: 2px; }
-  .pdlc-inner { min-width: 560px; }
-  .pdlc-head { display: grid; grid-template-columns: repeat(5, 1fr); }
-  .pdlc-ph { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: none;
-    letter-spacing: .05em; padding: 0 0 9px 11px; border-bottom: 2px solid var(--line); border-left: 1px solid var(--line); }
-  .pdlc-ph:first-child { border-left: none; padding-left: 1px; }
-  .pdlc-ph em { display: block; font-style: normal; font-size: 12px; color: var(--navy); font-weight: 700; margin-bottom: 1px; letter-spacing: 0; }
-  .pdlc-rows { display: grid; grid-template-columns: repeat(5, 1fr); row-gap: 9px; padding-top: 12px;
+  .pdlc-inner { min-width: 560px;
     background: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 5 - 1px),
       var(--line) calc(100% / 5 - 1px), var(--line) calc(100% / 5)); }
-  .pdlc-band { align-self: center; margin: 0 4px 2px; border: 1px dashed rgba(0,0,0,.22); border-radius: 9px;
-    padding: 7px 13px; text-align: center; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .pdlc-head { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 2px solid var(--line); }
+  .pdlc-ph { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: none;
+    letter-spacing: .05em; padding: 0 0 9px 11px; }
+  .pdlc-ph em { display: block; font-style: normal; font-size: 12px; color: var(--navy); font-weight: 700; margin-bottom: 1px; letter-spacing: 0; }
+  .pdlc-rows { display: grid; grid-template-columns: repeat(5, 1fr); row-gap: 9px; padding-top: 12px; }
+  .pdlc-band { align-self: center; margin: 0 4px 2px; display: flex; align-items: center; gap: 0;
+    padding: 6px 2px; color: var(--muted); font-size: 12px; font-weight: 600; }
+  .pdlc-band .ln { flex: 1 1 auto; height: 1px; background: rgba(0,0,0,.35); }
+  .pdlc-band .lbltxt { flex: 0 0 auto; white-space: nowrap; padding: 0 10px; }
+  .pdlc-band .ar { flex: 0 0 auto; color: rgba(0,0,0,.55); font-size: 13px; font-weight: 700; line-height: 1; margin-top: -1px; }
   .pdlc-bar { align-self: center; border-radius: 9px; padding: 9px 13px; color: #fff; line-height: 1.2;
     margin: 0 4px; box-shadow: var(--shadow); min-width: 0; }
   .pdlc-bar .bt { font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; }
   .pdlc-bar .br { display: block; font-weight: 500; font-size: 11.5px; opacity: .95; margin-top: 2px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pdlc-bar.gemini { background: #7fa4cc; }
-  .pdlc-bar.droid  { background: #5cb488; }
-  .pdlc-bar.devin  { background: #948cc4; }
-  .pdlc-bar.figma  { background: #d3a771; }
+  .pdlc-bar.gemini { background: #dbe9f0; color: #37352f; }
+  .pdlc-bar.droid  { background: #e6e6e3; color: #37352f; }
+  .pdlc-bar.devin  { background: #fbefc7; color: #37352f; }
+  .pdlc-bar.figma  { background: #dcede0; color: #37352f; }
   .pdlc-note { margin: 14px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
   .pdlc-note b { color: var(--navy); }
 
@@ -213,6 +215,10 @@
   .wex-out .wex-h { color: var(--green-dark); }
   .wex-line { font-size: 11px; line-height: 1.45; margin: 2px 0; padding-left: 12px; position: relative; }
   .wex-line::before { content: "•"; position: absolute; left: 2px; color: #c4ccd6; }
+  .spine-map { border-left: 2px solid var(--green); padding-left: 9px; margin: 0 0 7px; }
+  .spine-map .sm-tag { display: block; font-size: 10px; color: var(--green-dark); font-weight: 700; margin-bottom: 3px; }
+  .spine-map .wex-line { padding-left: 0; }
+  .spine-map .wex-line::before { content: none; }
   .wex-line b { color: var(--muted); font-weight: 600; }
   .src-pill { display: inline-block; font-size: 9px; font-weight: 800; border-radius: 4px; padding: 1px 5px; margin-left: 4px; }
   .src-pill.a { background: #e3eefb; color: #2f6fbf; }
@@ -222,7 +228,7 @@
   .wex-key b { color: var(--navy); }
   .wex-lead { margin: 6px 0 14px; font-size: 13px; color: var(--muted); line-height: 1.6; }
   .wex-lead b { color: var(--navy); }
-  .maps { display: grid; grid-template-columns: 1fr 1fr auto 1.5fr; gap: 18px; align-items: start; margin: 4px 0 14px; }
+  .maps { display: grid; grid-template-columns: 1fr 1fr auto 1.5fr; gap: 18px; align-items: start; margin: 2px 0 14px; }
   .mapfig { margin: 0; display: flex; flex-direction: column; }
   .mapfig a { display: block; }
   .mapfig img { width: 100%; height: 116px; object-fit: cover; object-position: top left;
@@ -231,7 +237,7 @@
   .mapfig.a img { border-top: 3px solid #4a8fe0; }
   .mapfig.b img { border-top: 3px solid #e8a13a; }
   .mapfig.out img { border-top: 3px solid var(--green); }
-  .mapfig figcaption { order: -1; font-size: 11px; color: var(--muted); margin: 0 0 7px; line-height: 1.4; }
+  .mapfig figcaption { font-size: 11px; color: var(--muted); margin: 7px 0 0; line-height: 1.4; }
   .mapfig figcaption b { color: var(--navy); }
   .maps-arrow { display: flex; align-items: center; justify-content: center; align-self: center;
     color: #c4ccd6; font-size: 22px; font-weight: 700; }
@@ -243,7 +249,7 @@
   .cascade .sep { color: #c4ccd6; font-weight: 700; }
   .proc { margin: 0 0 14px; }
   .proc .cascade { margin: 0; }
-  .cascade.branch { margin: 6px 0 0 190px; }
+  .cascade.branch { margin: 6px 0 0 210px; }
   .cascade.branch .bm { color: var(--muted); font-size: 15px; font-weight: 700; margin-right: 2px; }
   .cascade.branch .lbl { color: var(--muted); font-weight: 600; }
   .cascade.branch .node { background: transparent; color: var(--ink); border: none; border-radius: 0; padding: 0; font-weight: 500; }
@@ -351,7 +357,7 @@
           <div class="check"><span class="dot">✓</span> Label clearly before generating</div>
         </div>
         <div class="callout"><span class="tag">ELI10</span>
-          <div>Ask AI to explain it like you're 10. If it can't be simple, the output — or the data — isn't right yet.</div>
+          <div>Ask the AI to explain it like you're 10. It's how I learn to translate complex data into plain language a general audience gets, so the output stays clear and scales beyond me.</div>
         </div>
       </article>
 
@@ -395,12 +401,12 @@
               <div class="pdlc-ph"><em>05</em> Ship</div>
             </div>
             <div class="pdlc-rows">
-              <div class="pdlc-band" style="grid-column: 1 / 6; grid-row: 1;">Design — across every phase</div>
+              <div class="pdlc-band" style="grid-column: 1 / 6; grid-row: 1;"><span class="ar">←</span><span class="ln"></span><span class="lbltxt">Design process across the PDLC</span><span class="ln"></span><span class="ar">→</span></div>
               <div class="pdlc-bar gemini" style="grid-column: 1 / 3; grid-row: 2;"><span class="bt">Gemini</span><span class="br">Clean data · shape IA</span></div>
               <div class="pdlc-bar droid" style="grid-column: 1 / 6; grid-row: 3;"><span class="bt">Droid</span><span class="br">Research · enrich · consolidate · cheap to iterate</span></div>
               <div class="pdlc-bar devin" style="grid-column: 3 / 6; grid-row: 4;"><span class="bt">Devin</span><span class="br">Build the working prototype · ship it</span></div>
               <div class="pdlc-bar figma" style="grid-column: 1 / 3; grid-row: 5; width: 75%;"><span class="bt">Figma</span><span class="br">Journey &amp; flow analysis</span></div>
-              <div class="pdlc-bar figma" style="grid-column: 4 / 6; grid-row: 5;"><span class="bt">Figma</span><span class="br">Collaborate · granular per-component polish</span></div>
+              <div class="pdlc-bar figma" style="grid-column: 4 / 6; grid-row: 5; width: 75%; justify-self: end;"><span class="bt">Figma</span><span class="br">Collaborate · granular per-component polish</span></div>
             </div>
           </div>
         </div>
@@ -440,25 +446,22 @@
 
     <div class="accordion">
     <details class="acc" id="merge-zoom" open>
-    <summary>Zoom in 1 — Merge data for one journey</summary>
+    <summary>Zoom in 1: Merge data for one journey</summary>
     <div class="acc-body">
     <div class="card flowcard">
       <div class="zstep">
         <div class="zlabel"><span class="zn">1</span><span class="zt">Problem to solve</span></div>
-        <p class="wex-lead">Two mega maps described the same reality with different legends: a <b>JTBD canvas</b> (jobs) and a <b>merchant journey / service blueprint</b> (phases + actors), under different phases with no shared key. <b>The challenge — merge inconsistent data into one consistent taxonomy.</b></p>
+        <p class="wex-lead">Two mega maps described the same reality with different legends: a <b>JTBD canvas</b> (jobs) and a <b>merchant journey / service blueprint</b> (phases + actors), under different phases with no shared key. <b>The challenge: merge inconsistent data into one consistent taxonomy.</b></p>
       </div>
 
       <div class="zstep">
         <div class="zlabel"><span class="zn">2</span><span class="zt">Result</span></div>
         <p class="wex-lead"><b>9 jobs × 43 sub-steps → one 46-row Converged Journey.</b> A single dataset that carries both lenses, with every field traceable to its source.</p>
-      </div>
-
-      <div class="zstep">
         <div class="maps">
-          <figure class="mapfig a"><a href="assets/jtbd-canvas.png" target="_blank" rel="noopener"><img src="assets/jtbd-canvas.png" alt="JTBD canvas — jobs perspective"></a><figcaption><b>A · JTBD canvas</b> — jobs (Big → Little → Micro → pains)</figcaption></figure>
-          <figure class="mapfig b"><a href="assets/merchant-journey.png" target="_blank" rel="noopener"><img src="assets/merchant-journey.png" alt="Merchant journey service blueprint"></a><figcaption><b>B · Merchant journey</b> — service blueprint (phases + actors)</figcaption></figure>
+          <figure class="mapfig a"><a href="assets/jtbd-canvas.png" target="_blank" rel="noopener"><img src="assets/jtbd-canvas.png" alt="JTBD canvas, jobs perspective"></a><figcaption><span class="src-pill a">A</span> <b>JTBD canvas</b>: jobs (Big → Little → Micro → pains)</figcaption></figure>
+          <figure class="mapfig b"><a href="assets/merchant-journey.png" target="_blank" rel="noopener"><img src="assets/merchant-journey.png" alt="Merchant journey service blueprint"></a><figcaption><span class="src-pill b">B</span> <b>Merchant journey</b>: service blueprint (phases + actors)</figcaption></figure>
           <div class="maps-arrow">→</div>
-          <figure class="mapfig out"><a href="assets/converged-canvas.png" target="_blank" rel="noopener"><img src="assets/converged-canvas.png" alt="Converged journey canvas"></a><figcaption><b>Converged Journey</b> — both lenses, one canvas</figcaption></figure>
+          <figure class="mapfig out"><a href="assets/converged-canvas.png" target="_blank" rel="noopener"><img src="assets/converged-canvas.png" alt="Converged journey canvas"></a><figcaption><b>Converged Journey</b>: both lenses, one canvas</figcaption></figure>
         </div>
 
 
@@ -476,7 +479,10 @@
         </div>
         <div class="wex-arrow">→</div>
         <div class="wex-out">
-          <div class="wex-line"><b>JTBD step</b> · 1. Plan <span class="src-pill a">A</span></div>
+          <div class="spine-map">
+            <span class="sm-tag">Common spine, I mapped these (A ↔ B)</span>
+            <div class="wex-line"><b>Phase + JTBD step</b> · 1. Exploration ↔ 1. Plan <span class="src-pill a">A</span><span class="src-pill b">B</span></div>
+          </div>
           <div class="wex-line"><b>Big Job</b> · Plan how to accept payments <span class="src-pill a">A</span></div>
           <div class="wex-line"><b>Sub-step</b> · 1.b Account Setup &amp; Decision <span class="src-pill b">B</span></div>
           <div class="wex-line"><b>Primary user</b> · Merchant <span class="src-pill b">B</span></div>
@@ -489,9 +495,9 @@
       <div class="zstep">
         <div class="zlabel"><span class="zn">3</span><span class="zt">Step by step + the decision</span></div>
         <div class="flow merge4">
-          <div class="fstep"><div class="fn">1</div><h4>Match on meaning</h4><p>Map one taxonomy onto another (Phase ↔ JTBD step) — not by label.</p></div>
+          <div class="fstep"><div class="fn">1</div><h4>Match on meaning</h4><p>Map one taxonomy onto another (Phase ↔ JTBD step), not by label.</p></div>
           <div class="fstep"><div class="fn">2</div><h4>Pick a spine</h4><p>Choose the top dimension; everything nests under it.</p>
-            <div class="spine"><span class="slbl">My decision — Phase as the spine</span><span class="chain"><b>Phase</b> → Big job → Little job → Pain points → Sub-steps + Evidence</span></div>
+            <div class="spine"><span class="slbl">My decision: Phase as the spine</span><span class="chain"><b>Phase</b> → Big job → Little job → Pain points → Sub-steps + Evidence</span></div>
           </div>
           <div class="fstep"><div class="fn">3</div><h4>Cascade</h4><p>Nest jobs, pains and evidence beneath the spine.</p></div>
           <div class="fstep"><div class="fn">4</div><h4>Keep provenance</h4><p>Tag every field A / B; flag what doesn't map.</p></div>
@@ -502,12 +508,12 @@
     </details>
 
     <details class="acc" id="prd-zoom">
-    <summary>Zoom in 2 — From a one-pager doc to a full journey prototype</summary>
+    <summary>Zoom in 2: From a one-pager doc to a full journey prototype</summary>
     <div class="acc-body">
     <div class="card flowcard wex">
       <div class="zstep">
         <div class="zlabel"><span class="zn">1</span><span class="zt">Problem to solve</span></div>
-        <p class="wex-lead">The device experience in the Customer Area was <b>10+ disconnected table menus</b> — no shared model, everything edited one device at a time. And a vision doc — still abstract about how it actually helps users — doesn't turn itself into a buildable flow.</p>
+        <p class="wex-lead">The device experience in the Customer Area was <b>10+ disconnected table menus</b>, with no shared model and everything edited one device at a time. And the vision doc was still abstract about how it actually helps users, so it didn't turn itself into a buildable flow.</p>
       </div>
 
       <div class="zstep">
@@ -523,7 +529,7 @@
           </div>
           <div class="cascade branch">
             <span class="bm">↳</span>
-            <span class="lbl">Converged flow:</span>
+            <span class="lbl">How to build the flow from the doc:</span>
             <span class="node">JTBD journey</span><span class="sep">→</span>
             <span class="node">Component framework</span><span class="sep">→</span>
             <span class="node">Details per component</span><span class="sep">→</span>
@@ -534,13 +540,13 @@
 
       <div class="zstep">
         <div class="zlabel"><span class="zn">3</span><span class="zt">The decisions</span></div>
-        <p class="wex-lead" style="margin-bottom:10px;">A few decisions did the heavy lifting — lock these and the model structures around them instead of inventing the product:</p>
+        <p class="wex-lead" style="margin-bottom:10px;">A few decisions did the heavy lifting. Lock these and the model structures around them instead of inventing the product:</p>
         <div class="flow pieces">
-          <div class="fstep"><h4>Shape the products from JTBD</h4><p>An intuitive call, grounded in the JTBD and how the area is used today — which became the three products, each with a one-line "what it solves."</p></div>
-          <div class="fstep"><h4>Focus on the current journey</h4><p>Stay on the journey merchants have today and improve it from user insights — rather than trying to cover everything at once.</p></div>
-          <div class="fstep"><h4>Describe the behaviour concretely</h4><p>Spell out how each part actually behaves — natural-language search, all-stores / all-devices views, reassign, a control panel with a live simulator.</p></div>
-          <div class="fstep"><h4>Layer in realistic data over time</h4><p>It needn't be precise at first, but realistic figures and stats — 143 settings across 26 groups, 656k active vs 419k trading — make it land for the viewer.</p></div>
-          <div class="fstep"><h4>Feed it good examples</h4><p>Point at benchmarks and existing UIs — DCC report, Looker, Square / Stripe — so solutions anchor to patterns people already know.</p></div>
+          <div class="fstep"><h4>Shape the products from JTBD</h4><p>An intuitive call, grounded in the JTBD and how the area is used today. That became the three products, each with a one-line "what it solves."</p></div>
+          <div class="fstep"><h4>Focus on the current journey</h4><p>Stay on the journey merchants have today and improve it from user insights, rather than trying to cover everything at once.</p></div>
+          <div class="fstep"><h4>Describe the behaviour concretely</h4><p>Spell out how each part actually behaves: natural-language search, all-stores / all-devices views, reassign, a control panel with a live simulator.</p></div>
+          <div class="fstep"><h4>Layer in realistic data over time</h4><p>It needn't be precise at first, but realistic figures and stats (143 settings across 26 groups, 656k active vs 419k trading) make it land for the viewer.</p></div>
+          <div class="fstep"><h4>Feed it good examples</h4><p>Point at benchmarks and existing UIs like the DCC report, Looker, and Square / Stripe, so solutions anchor to patterns people already know.</p></div>
         </div>
       </div>
     </div>
@@ -552,11 +558,11 @@
     <div class="deepgrid">
       <div class="panel">
         <h3>What I learned the hard way</h3>
-        <div class="tiprow"><span class="ic"></span><div><b>It invents numbers with total confidence.</b> I caught a "900" that never existed — now I make it cite a source or say "I don't know."</div></div>
-        <div class="tiprow"><span class="ic"></span><div><b>It quietly skips sources.</b> I had to ask "did you actually use the NPS file? the Slack Q&A?" — always check coverage.</div></div>
-        <div class="tiprow"><span class="ic"></span><div><b>It can't always read what it claims.</b> Inline files weren't really parsed, just approximated — confirm it used your real source.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It invents numbers with total confidence.</b> I caught a "900" that never existed, so now I make it cite a source or say "I don't know."</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It quietly skips sources.</b> I had to ask "did you actually use the NPS file? the Slack Q&A?", so always check coverage.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It can't always read what it claims.</b> Inline files weren't really parsed, just approximated, so confirm it used your real source.</div></div>
         <div class="tiprow"><span class="ic"></span><div><b>It guesses the merge when tables don't match.</b> Different taxonomies → it invents a mapping. Lock the approach before it builds.</div></div>
-        <div class="tiprow"><span class="ic"></span><div><b>It jumps to screens too early.</b> Ask for a PRD and it starts drawing pages — settle the JTBD journey and component framework first, or the flow won't connect.</div></div>
+        <div class="tiprow"><span class="ic"></span><div><b>It jumps to screens too early.</b> Ask for a PRD and it starts drawing pages. Settle the JTBD journey and component framework first, or the flow won't connect.</div></div>
       </div>
       <div class="panel">
         <h3>Prompts that do the work &nbsp;<span style="font-weight:400;color:var(--muted);font-size:12px;">(click to copy)</span></h3>
@@ -564,9 +570,9 @@
           <span class="prtag">1 · Extract &amp; tag source</span><span class="copy">Copy</span>
           <span class="txt">"Make a same-format table from each source, tag every row with its source, and cross-check it against the original."</span>
         </div>
-        <div class="pr" data-copy="Before I trust this: verify the numbers and flag anything you can't source — never invent a figure. Then explain the top findings like I'm 10, and keep one verbatim quote per point as evidence.">
+        <div class="pr" data-copy="Before I trust this: verify the numbers and flag anything you can't source, and never invent a figure. Then explain the top findings like I'm 10, and keep one verbatim quote per point as evidence.">
           <span class="prtag">2 · Verify &amp; simplify</span><span class="copy">Copy</span>
-          <span class="txt">"Verify the numbers (flag anything unsourced — don't invent), explain the top findings like I'm 10, and keep one verbatim quote per point."</span>
+          <span class="txt">"Verify the numbers (flag anything unsourced, don't invent), explain the top findings like I'm 10, and keep one verbatim quote per point."</span>
         </div>
       </div>
     </div>
@@ -597,7 +603,7 @@
     window.addEventListener('hashchange', openHashTarget);
     openHashTarget();
 
-    // Image lightbox — click any figure image to open a full-page, closable modal
+    // Image lightbox: click any figure image to open a full-page, closable modal
     (function () {
       const lb = document.getElementById('lightbox');
       const lbImg = lb.querySelector('img');
